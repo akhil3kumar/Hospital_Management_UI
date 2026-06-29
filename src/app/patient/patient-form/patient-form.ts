@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { PatientService } from '../../core/services/patient/patient-service';
 import { PatientRequest } from '../../shared/models/patient/patient-request';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PatientRequestForm } from '../../shared/forms/patient-form';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-patient-form',
@@ -12,7 +14,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PatientForm implements OnInit {
   patientForm!: FormGroup;
-  patientId!: number | null;
+  patientId: number | null = null;
+  isLoading!: boolean;
+
+  genderType: string[] = ['Male', 'Female', 'Others'];
 
   constructor(
     private fb: FormBuilder,
@@ -22,27 +27,36 @@ export class PatientForm implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.patientForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      age: ['', [Validators.required, Validators.min(0)]],
-      disease: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-    });
+    this.patientForm = PatientRequestForm.createPatientForm(this.fb);
+    this.fetchFormDataById();
+  }
 
+  fetchFormDataById() {
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
+      this.isLoading = true;
+
       this.patientId = +idParam;
-      this.patientService.getPatient(this.patientId).subscribe({
-        next: (response) => {
-          this.patientForm.patchValue({
-            name: response.name,
-            age: response.age,
-            disease: response.disease,
-          });
-        },
-        error: (err) => {
-          console.error(err);
-        },
-      });
+      this.patientService
+        .getPatient(this.patientId)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            console.log(response);
+            this.patientForm.patchValue({
+              name: response.name,
+              age: response.age,
+              disease: response.disease,
+              gender: response.gender,
+              email: response.email,
+              phoneNumber: response.phoneNumber,
+              address: response.address,
+            });
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        });
     }
   }
 
@@ -52,29 +66,37 @@ export class PatientForm implements OnInit {
       return;
     }
 
+    this.isLoading = true;
+
     console.log(this.patientForm.value);
-    const patientRequest: PatientRequest = this.patientForm.value;
+    const patientRequest = this.patientForm.getRawValue() as PatientRequest;
 
     if (this.patientId) {
-      this.patientService.updatePatient(this.patientId, patientRequest).subscribe({
-        next: (response) => {
-          this.router.navigate(['/admin/patient']);
-        },
-        error: (err) => {
-          console.error(err);
-        },
-      });
+      this.patientService
+        .updatePatient(this.patientId, patientRequest)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.router.navigate(['/admin/patient']);
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        });
     } else {
-      this.patientService.addPatient(patientRequest).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.patientForm.reset();
-          this.router.navigate(['/admin/patient']);
-        },
-        error: (err) => {
-          console.error(err);
-        },
-      });
+      this.patientService
+        .addPatient(patientRequest)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            console.log(response);
+            this.patientForm.reset();
+            this.router.navigate(['/admin/patient']);
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        });
     }
   }
 
@@ -87,5 +109,21 @@ export class PatientForm implements OnInit {
 
   get disease(): FormControl {
     return this.patientForm.get('disease') as FormControl;
+  }
+
+  get gender(): FormControl {
+    return this.patientForm.get('gender') as FormControl;
+  }
+
+  get email(): FormControl {
+    return this.patientForm.get('email') as FormControl;
+  }
+
+  get phoneNumber(): FormControl {
+    return this.patientForm.get('phoneNumber') as FormControl;
+  }
+
+  get address(): FormControl {
+    return this.patientForm.get('address') as FormControl;
   }
 }

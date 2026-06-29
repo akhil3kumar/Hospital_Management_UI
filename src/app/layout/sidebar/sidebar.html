@@ -1,1 +1,171 @@
-<p>sidebar works!</p>
+<!-- <div class="sidebar">
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-link">
+        <i class="bi bi-speedometer2"></i>
+        Dashboard
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/patient" routerLinkActive="active" class="nav-link">
+        <i class="bi bi-people"></i>
+        Patients
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/doctor" routerLinkActive="active" class="nav-link">
+        <i class="bi bi-person-badge"></i>
+        Doctors
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/appointment" routerLinkActive="active" class="nav-link">
+        <i class="bi bi-calendar-check"></i>
+        Appointments
+      </a>
+      <li class="nav-item">
+        <a routerLink="/admin/appointment" routerLinkActive="active" class="nav-link">
+          <i class="bi bi-calendar-check"></i>
+          Appointments
+        </a>
+      </li>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/notification" routerLinkActive="active" class="nav-link">
+        <i class="bi bi-bell"></i>
+        Notifications
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/billing" routerLinkActive="active" class="nav-link">
+        <i class="bi bi-credit-card"></i>
+        Billing
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/settings" routerLinkActive="active" class="nav-link">
+        <i class="bi bi-gear"></i>
+        Settings
+      </a>
+    </li>
+
+    <li class="nav-item mt-auto">
+      <a routerLink="/login" class="nav-link logout-link">
+        <i class="bi bi-box-arrow-right"></i>
+        Logout
+      </a>
+    </li>
+  </ul>
+</div> -->
+
+<mat-sidenav-container class="container">
+  <mat-sidenav mode="side" opened class="sidebar">
+    <mat-nav-list>
+      <a
+        mat-list-item
+        routerLink="/admin/dashboard"
+        routerLinkActive="active-link"
+        class="nav-link"
+      >
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Dashboard</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <h4 class="menu-title">APPOINTMENT</h4>
+      <a
+        mat-list-item
+        routerLink="/admin/appointment/create"
+        routerLinkActive="active-link"
+        class="nav-link"
+      >
+        <mat-icon matListItemIcon>event</mat-icon>
+        <span matListItemTitle>Book Appointment</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="/admin/appointment/status/SCHEDULED"
+        routerLinkActive="active-link"
+        class="nav-link"
+      >
+        <mat-icon matListItemIcon>event</mat-icon>
+        <span matListItemTitle>My Appointments</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="/admin/appointment"
+        routerLinkActive="active-link"
+        class="nav-link"
+      >
+        <mat-icon matListItemIcon>list</mat-icon>
+        <span matListItemTitle>All Appointments</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <h4 class="menu-title">PATIENTS</h4>
+      <a mat-list-item routerLink="/admin/patient" routerLinkActive="active-link" class="nav-link">
+        <mat-icon matListItemIcon>perm_identity</mat-icon>
+        <span matListItemTitle>Patients</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <h4 class="menu-title">DOCTORS</h4>
+      <a mat-list-item routerLink="/admin/doctor" routerLinkActive="active-link" class="nav-link">
+        <mat-icon matListItemIcon>medical_services</mat-icon>
+        <span matListItemTitle>Doctors</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="/admin/doctor/department"
+        routerLinkActive="active-link"
+        class="nav-link"
+      >
+        <mat-icon matListItemIcon>local_hospital</mat-icon>
+        <span matListItemTitle>Department</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <h4 class="menu-title">BILLING</h4>
+      <a mat-list-item routerLink="/admin/payment" routerLinkActive="active-link" class="nav-link">
+        <mat-icon matListItemIcon>payment</mat-icon>
+        <span matListItemTitle>Payment</span>
+      </a>
+
+      <a mat-list-item routerLink="/admin/payment" routerLinkActive="active-link" class="nav-link">
+        <mat-icon matListItemIcon>receipt_long</mat-icon>
+        <span matListItemTitle>Invoices</span>
+      </a>
+    </mat-nav-list>
+
+    <mat-nav-list>
+      <h4 class="menu-title">SETTING</h4>
+      <a mat-list-item routerLink="/admin/profile" routerLinkActive="active-link" class="nav-link">
+        <mat-icon matListItemIcon>people</mat-icon>
+        <span matListItemTitle>Profile</span>
+      </a>
+
+      <a
+        mat-list-item
+        routerLink="/admin/logout"
+        routerLinkActive="active-link"
+        class="logout-link"
+      >
+        <mat-icon matListItemIcon>logout</mat-icon>
+        <span matListItemTitle>Logout</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+</mat-sidenav-container>

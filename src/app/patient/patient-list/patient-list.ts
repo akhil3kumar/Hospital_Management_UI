@@ -11,8 +11,24 @@ import { NotExpr } from '@angular/compiler';
   styleUrl: './patient-list.css',
 })
 export class PatientList implements OnInit {
-  constructor(private patientService: PatientService, private router: Router) {}
+  patientTableInput: string[] = [
+    'Id',
+    'Name',
+    'Age',
+    'Gender',
+    'Email',
+    'Phone Number',
+    'Active',
+    'Created At',
+    'Updated At',
+    'Disease',
+    'Action',
+  ];
+
   patientsResponse: PatientResponse[] = [];
+
+  constructor(private patientService: PatientService, private router: Router) {}
+
   ngOnInit(): void {
     this.getAllPatients();
   }

@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-4 mb-4" *ngFor="let doctor of doctorRecords">
+    <div class="card h-100">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Id: </strong>{{ doctor.id }}</li>
+        <li class="list-group-item"><strong>Name: </strong>{{ doctor.name }}</li>
+        <li class="list-group-item">
+          <strong>Specialization: </strong>{{ doctor.specialization }}
+        </li>
+        <li class="list-group-item"><strong>Email: </strong>{{ doctor.email }}</li>
+        <li class="list-group-item"><strong>Phone Number: </strong>{{ doctor.phoneNumber }}</li>
+        <li class="list-group-item">
+          <strong>Active: </strong>{{ doctor.available ? 'Availabkle' : 'Inactive' }}
+        </li>
+        <li class="list-group-item">
+          <button
+            type="button"
+            (click)="updateDoctorRecord(doctor.id)"
+            class="btn btn-warning me-2"
+          >
+            Edit
+          </button>
+          <button type="button" (click)="deleteDoctorRecord(doctor.id)" class="btn btn-danger">
+            Delete
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="doctorRecords.length === 0" class="text-center mt-4">No Doctors Record found</div>

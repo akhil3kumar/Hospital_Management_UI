@@ -1,0 +1,9 @@
+.navbar {
+    background-color: rgb(13 145 253 / 25%);
+    color: white;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #2c2f05;
+}

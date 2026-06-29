@@ -1,0 +1,56 @@
+<div class="form-container">
+  <form class="" [formGroup]="doctorForm" (ngSubmit)="doctorFormSubmit()">
+    <div class="input-column">
+      <label for="doctor-name">Name</label>
+      <input id="doctor-name" type="text" formControlName="name" />
+
+      <div *ngIf="(name.touched || name.dirty) && name.invalid" class="error-class">
+        <span *ngIf="name.errors?.['required']">Name is required.</span>
+        <span *ngIf="name.errors?.['minlength'] || name.errors?.['maxlength']">
+          Name must be between 2 and 50 characters.
+        </span>
+      </div>
+    </div>
+
+    <div class="select-coloumn">
+      <label for="doctor-specialization">Specialization</label>
+      <select id="doctor-specialization" formControlName="specialization">
+        <option value="" disabled selected>Field of Specialization</option>
+        <option *ngFor="let specialization of feildOfSpeciality" [value]="specialization">
+          {{ specialization }}
+        </option>
+      </select>
+
+      <div *ngIf="specialization.touched && specialization.invalid" class="error-class">
+        <span *ngIf="specialization.errors?.['required']">specialization is required.</span>
+      </div>
+    </div>
+
+    <div class="input-column">
+      <label for="doctor-email">Email</label>
+      <input id="doctor-email" type="email" formControlName="email" />
+
+      <div *ngIf="(email.touched || email.dirty) && email.invalid" class="error-class">
+        <span *ngIf="email.errors?.['required']">Email is required.</span>
+        <span *ngIf="email.errors?.['email']">Write the valid mail id.</span>
+      </div>
+    </div>
+
+    <div class="input-column">
+      <label for="doctor-phoneNo">Contact Number</label>
+      <input id="doctor-phoneNo" type="text" formControlName="phoneNumber" />
+
+      <div
+        *ngIf="(phoneNumber.touched || phoneNumber.dirty) && phoneNumber.invalid"
+        class="error-class"
+      >
+        <span *ngIf="phoneNumber.errors?.['required']">Contact number is required.</span>
+        <span *ngIf="phoneNumber.errors?.['pattern']">Write the valid Contact No.</span>
+      </div>
+    </div>
+
+    <div class="button-column">
+      <button type="submit" [disabled]="doctorForm.invalid">Submit</button>
+    </div>
+  </form>
+</div>

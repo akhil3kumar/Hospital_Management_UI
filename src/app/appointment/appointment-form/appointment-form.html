@@ -1,0 +1,84 @@
+<div class="form-container">
+  <form [formGroup]="appointmentForm" (ngSubmit)="saveAppointment()">
+    <div class="mb-3">
+      <label class="form-label">Patient</label>
+      <select class="form-select" formControlName="patientId">
+        <option value="">Select Patient</option>
+        <option *ngFor="let patient of patientsRecord" [value]="patient.id">
+          {{ patient.name }}
+        </option>
+      </select>
+
+      <div *ngIf="(patientId.touched || patientId.dirty) && patientId.invalid" class="error-class">
+        <span *ngIf="patientId.errors?.['required']">Patient Name is required.</span>
+        <span *ngIf="patientId.errors?.['minlength'] || patientId.errors?.['maxlength']">
+          Name must be between 2 and 50 characters.
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Doctor</label>
+      <select class="form-select" formControlName="doctorId">
+        <option value="">Select Doctor</option>
+        <option *ngFor="let doctor of doctorsRecord" [value]="doctor.id">
+          {{ doctor.name }} - {{ doctor.specialization }}
+        </option>
+      </select>
+
+      <div *ngIf="(doctorId.touched || doctorId.dirty) && doctorId.invalid" class="error-class">
+        <span *ngIf="doctorId.errors?.['required']">Patient Name is required.</span>
+        <span *ngIf="doctorId.errors?.['minlength'] || doctorId.errors?.['maxlength']">
+          Doctor Name must be between 2 and 50 characters.
+        </span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Appointment Date</label>
+        <input type="date" class="form-control" formControlName="appointmentDate" />
+
+        <div
+          *ngIf="(appointmentDate.touched || appointmentDate.dirty) && appointmentDate.invalid"
+          class="error-class"
+        >
+          <span *ngIf="appointmentDate.errors?.['required']">Appointment Date is required.</span>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Appointment Time</label>
+        <input type="time" class="form-control" formControlName="appointmentTime" />
+
+        <div
+          *ngIf="(appointmentTime.touched || appointmentTime.dirty) && appointmentTime.invalid"
+          class="error-class"
+        >
+          <span *ngIf="appointmentTime.errors?.['required']">Appointment Time is required.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Reason For Visit</label>
+      <textarea rows="4" class="form-control" formControlName="reason"> </textarea>
+
+      <div *ngIf="(reason.touched || reason.dirty) && reason.invalid" class="error-class">
+        <span *ngIf="reason.errors?.['required']">Appointment Time is required.</span>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+      <button type="reset" class="btn btn-secondary">Reset</button>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="appointmentForm.invalid || isLoading"
+      >
+        {{ isLoading ? 'Saving...' : 'Book Appointment' }}
+      </button>
+    </div>
+  </form>
+</div>

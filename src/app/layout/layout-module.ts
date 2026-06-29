@@ -6,10 +6,12 @@ import { Header } from './header/header';
 import { Sidebar } from './sidebar/sidebar';
 import { Footer } from './footer/footer';
 import { AdminLayout } from './admin-layout/admin-layout';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { AngularMaterialModule } from '../angular-material-module';
 
 @NgModule({
   declarations: [Header, Sidebar, Footer, AdminLayout],
-  imports: [CommonModule, LayoutRoutingModule],
+  imports: [CommonModule, LayoutRoutingModule, AngularMaterialModule],
   exports: [AdminLayout],
 })
 export class LayoutModule {}

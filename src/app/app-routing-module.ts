@@ -17,6 +17,11 @@ const routes: Routes = [
     component: AdminLayout,
     children: [
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard-module').then((m) => m.DashboardModule),
       },
@@ -24,11 +29,16 @@ const routes: Routes = [
         path: 'patient',
         loadChildren: () => import('./patient/patient-module').then((m) => m.PatientModule),
       },
+      {
+        path: 'doctor',
+        loadChildren: () => import('./doctor/doctor-module').then((m) => m.DoctorModule),
+      },
+      {
+        path: 'appointment',
+        loadChildren: () =>
+          import('./appointment/appointment-module').then((m) => m.AppointmentModule),
+      },
     ],
-  },
-  {
-    path: '**',
-    redirectTo: 'login',
   },
 ];
 
